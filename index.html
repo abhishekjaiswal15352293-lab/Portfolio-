@@ -1,1 +1,630 @@
-index
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhishek Anand – Digital Marketing</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #08080f;
+    --surface: #10101e;
+    --surface2: #181828;
+    --cyan: #00f5d4;
+    --magenta: #f700ff;
+    --gold: #ffd166;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --border: rgba(0,245,212,0.15);
+  }
+
+  @media print {
+    body { background: #fff !important; color: #111 !important; }
+    .noise, .grid-bg { display: none; }
+    .card { background: #f4f4f8 !important; border-color: #ccc !important; }
+    .tag { background: #e0f7f2 !important; color: #006655 !important; border-color: #aaa !important; }
+    :root { --text: #111; --muted: #444; }
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Background effects */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,245,212,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,212,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .glow-orb {
+    position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0;
+  }
+  .orb1 { width: 500px; height: 500px; background: rgba(0,245,212,0.08); top: -100px; right: -100px; }
+  .orb2 { width: 400px; height: 400px; background: rgba(247,0,255,0.06); bottom: 100px; left: -100px; }
+
+  .wrapper {
+    position: relative; z-index: 1;
+    max-width: 900px; margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 48px;
+    padding: 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--gold));
+  }
+
+  .header::after {
+    content: 'DM';
+    position: absolute; right: 32px; top: 50%; transform: translateY(-50%);
+    font-family: 'Syne', sans-serif;
+    font-size: 96px; font-weight: 800;
+    color: rgba(0,245,212,0.05);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .photo-wrap {
+    width: 110px; height: 110px;
+    border-radius: 16px;
+    border: 2px solid var(--cyan);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 24px rgba(0,245,212,0.25);
+    flex-shrink: 0;
+  }
+
+  .photo-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--surface2), #1e1e38);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 4px;
+  }
+
+  .photo-placeholder svg { opacity: 0.4; }
+  .photo-placeholder span {
+    font-size: 9px; color: var(--muted); letter-spacing: 0.5px; text-align: center;
+    padding: 0 8px;
+  }
+
+  .header-info {}
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,245,212,0.1);
+    border: 1px solid rgba(0,245,212,0.3);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 11px; font-weight: 500;
+    color: var(--cyan); letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 14px;
+    background: linear-gradient(90deg, #fff 60%, var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .contacts {
+    display: flex; flex-wrap: wrap; gap: 12px;
+  }
+
+  .contact-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12.5px; color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-item:hover { color: var(--cyan); }
+
+  .contact-item svg { flex-shrink: 0; }
+
+  /* ── BODY LAYOUT ── */
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+  }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 28px; }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(0,245,212,0.3), transparent);
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 12px;
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(0,245,212,0.2);
+    box-shadow: 0 4px 24px rgba(0,245,212,0.06);
+  }
+
+  .card-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: #fff;
+  }
+
+  .card-sub {
+    font-size: 12px; color: var(--cyan); margin-top: 2px;
+    font-weight: 500;
+  }
+
+  .card-date {
+    font-size: 11px; color: var(--muted);
+    background: var(--surface2);
+    border-radius: 6px; padding: 3px 9px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  .card ul {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+
+  .card li {
+    font-size: 13px; color: #b0b0c8; line-height: 1.55;
+    display: flex; gap: 8px;
+  }
+
+  .card li::before {
+    content: '▸';
+    color: var(--cyan); flex-shrink: 0; margin-top: 1px;
+    font-size: 11px;
+  }
+
+  /* ── SUMMARY ── */
+  .summary-text {
+    font-size: 13.5px; line-height: 1.7;
+    color: #b0b0c8;
+  }
+
+  .summary-text strong { color: var(--cyan); font-weight: 500; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {}
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 10px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px; font-weight: 800;
+    background: linear-gradient(135deg, var(--cyan), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    font-size: 10px; color: var(--muted);
+    margin-top: 2px; letter-spacing: 0.5px;
+  }
+
+  /* ── SKILL TAGS ── */
+  .tag-cloud {
+    display: flex; flex-wrap: wrap; gap: 7px;
+  }
+
+  .tag {
+    font-size: 11.5px; font-weight: 500;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(0,245,212,0.07);
+    border: 1px solid rgba(0,245,212,0.18);
+    color: #c8f8f2;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .tag:hover {
+    background: rgba(0,245,212,0.15);
+    border-color: var(--cyan);
+    color: #fff;
+  }
+
+  .tag.soft {
+    background: rgba(247,0,255,0.07);
+    border-color: rgba(247,0,255,0.18);
+    color: #f5c8ff;
+  }
+
+  .tag.soft:hover {
+    background: rgba(247,0,255,0.15);
+    border-color: var(--magenta);
+  }
+
+  .tag.tool {
+    background: rgba(255,209,102,0.07);
+    border-color: rgba(255,209,102,0.2);
+    color: #fff5cc;
+  }
+
+  .tag.tool:hover {
+    background: rgba(255,209,102,0.15);
+    border-color: var(--gold);
+  }
+
+  /* ── CERT CARD ── */
+  .cert-item {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .cert-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700; color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .cert-org {
+    font-size: 11.5px; color: var(--gold);
+  }
+
+  /* ── PROGRESS BARS ── */
+  .skill-bar-wrap { margin-bottom: 12px; }
+
+  .skill-bar-top {
+    display: flex; justify-content: space-between;
+    font-size: 12px; margin-bottom: 5px;
+  }
+
+  .skill-bar-name { color: #d0d0e8; font-weight: 500; }
+  .skill-bar-pct { color: var(--muted); }
+
+  .skill-bar-track {
+    height: 4px; background: rgba(255,255,255,0.07);
+    border-radius: 99px; overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    transform-origin: left;
+    animation: grow 1.2s cubic-bezier(0.4,0,0.2,1) both;
+  }
+
+  @keyframes grow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 40px;
+    padding: 20px 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+
+  .footer-left {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--muted);
+  }
+
+  .footer-left span { color: var(--cyan); }
+
+  .footer-right {
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0; transform: translateY(16px);
+    animation: fadein 0.6s forwards;
+  }
+
+  @keyframes fadein {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.05s; }
+  .fade-in:nth-child(2) { animation-delay: 0.12s; }
+  .fade-in:nth-child(3) { animation-delay: 0.19s; }
+  .fade-in:nth-child(4) { animation-delay: 0.26s; }
+  .fade-in:nth-child(5) { animation-delay: 0.33s; }
+
+  @media (max-width: 700px) {
+    .header { grid-template-columns: 1fr; }
+    .header::after { display: none; }
+    .body { grid-template-columns: 1fr; }
+    h1 { font-size: 28px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow-orb orb1"></div>
+<div class="glow-orb orb2"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header class="header fade-in">
+    <div class="photo-wrap">
+      <!-- Replace src below with your GitHub raw image URL -->
+      <div class="photo-placeholder">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="1.5">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <span>Add photo URL</span>
+      </div>
+    </div>
+    <div class="header-info">
+      <div class="badge">Digital Marketing</div>
+      <h1>Abhishek Anand</h1>
+      <div class="contacts">
+        <a class="contact-item" href="mailto:abhishekjaiswal15352293@gmail.com">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          abhishekjaiswal15352293@gmail.com
+        </a>
+        <a class="contact-item" href="tel:8862818765">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.8 19.8 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.13 1 .38 1.97.73 2.9a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.18-1.18a2 2 0 012.11-.45c.93.35 1.9.6 2.9.73A2 2 0 0122 16.92z"/></svg>
+          +91 8862818765
+        </a>
+        <a class="contact-item" href="https://www.linkedin.com/in/abhishek-anand-570956361" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- MAIN COLUMN -->
+    <main>
+
+      <!-- SUMMARY -->
+      <div class="section fade-in">
+        <div class="section-label">About Me</div>
+        <div class="card">
+          <p class="summary-text">
+            Results-oriented <strong>BBA student (Sem V · CGPA 8.2)</strong> with hands-on experience in digital marketing. Skilled in <strong>SEO, content strategy, and social media marketing</strong>, with strong analytical, problem-solving, and communication abilities. Passionate about driving engagement and optimizing digital performance.
+          </p>
+        </div>
+      </div>
+
+      <!-- EXPERIENCE -->
+      <div class="section fade-in">
+        <div class="section-label">Experience</div>
+        <div class="card">
+          <div class="card-top">
+            <div>
+              <div class="card-title">Project Management Intern</div>
+              <div class="card-sub">Excelerate &nbsp;·&nbsp; Remote</div>
+            </div>
+            <div class="card-date">2024</div>
+          </div>
+          <ul>
+            <li>Executed and managed social media campaigns to increase audience engagement</li>
+            <li>Analyzed campaign performance metrics to improve content effectiveness</li>
+            <li>Developed data-driven content strategies aligned with audience behavior</li>
+            <li>Conducted SEO research to enhance online visibility and reach</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- EDUCATION -->
+      <div class="section fade-in">
+        <div class="section-label">Education</div>
+        <div class="card">
+          <div class="card-top">
+            <div>
+              <div class="card-title">Bachelor of Business Administration</div>
+              <div class="card-sub">St. Xavier's College, Dumka &nbsp;·&nbsp; Semester V</div>
+            </div>
+            <div class="card-date">2023 – 2026</div>
+          </div>
+          <div style="margin-top:10px; display:flex; align-items:center; gap:8px;">
+            <span style="font-size:12px;color:var(--muted);">Current CGPA</span>
+            <span style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">8.2</span>
+            <span style="font-size:12px;color:var(--muted);">/10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL BARS -->
+      <div class="section fade-in">
+        <div class="section-label">Core Competencies</div>
+        <div class="card">
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-top"><span class="skill-bar-name">SEO & Content Strategy</span><span class="skill-bar-pct">88%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div>
+          </div>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-top"><span class="skill-bar-name">Social Media Marketing</span><span class="skill-bar-pct">85%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-top"><span class="skill-bar-name">Campaign Analysis</span><span class="skill-bar-pct">80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+          </div>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-top"><span class="skill-bar-name">Data-Driven Content</span><span class="skill-bar-pct">78%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- STATS -->
+      <div class="section fade-in">
+        <div class="section-label">Snapshot</div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-num">8.2</div>
+            <div class="stat-label">CGPA</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">2+</div>
+            <div class="stat-label">Internships</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">V</div>
+            <div class="stat-label">Semester</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Drive</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="section fade-in">
+        <div class="section-label">Digital Skills</div>
+        <div class="tag-cloud">
+          <span class="tag">SEO</span>
+          <span class="tag">Content Strategy</span>
+          <span class="tag">Social Media</span>
+          <span class="tag">Campaign Analysis</span>
+        </div>
+      </div>
+
+      <div class="section fade-in">
+        <div class="section-label">Tools</div>
+        <div class="tag-cloud">
+          <span class="tag tool">MS Excel</span>
+          <span class="tag tool">MS Word</span>
+          <span class="tag tool">PowerPoint</span>
+        </div>
+      </div>
+
+      <div class="section fade-in">
+        <div class="section-label">Soft Skills</div>
+        <div class="tag-cloud">
+          <span class="tag soft">Communication</span>
+          <span class="tag soft">Storytelling</span>
+          <span class="tag soft">Creativity</span>
+          <span class="tag soft">Analytical</span>
+          <span class="tag soft">Problem Solving</span>
+          <span class="tag soft">Time Mgmt</span>
+          <span class="tag soft">Team Player</span>
+          <span class="tag soft">Customer-Centric</span>
+        </div>
+      </div>
+
+      <!-- CERTIFICATIONS -->
+      <div class="section fade-in">
+        <div class="section-label">Certifications</div>
+        <div class="cert-item">
+          <div class="cert-name">Digital Marketing Internship</div>
+          <div class="cert-org">IIM Bangalore</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">Project Management Internship</div>
+          <div class="cert-org">Excelerate</div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer fade-in">
+    <div class="footer-left">Abhishek Anand &nbsp;·&nbsp; <span>Digital Marketing</span></div>
+    <div class="footer-right">abhishekjaiswal15352293@gmail.com &nbsp;·&nbsp; +91 8862818765</div>
+  </footer>
+
+</div>
+</body>
+</html>
